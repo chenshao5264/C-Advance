@@ -270,6 +270,53 @@ void QuickSort(vector<int>& array)
     QuickSort(array, 0, array.size() - 1);
 }
 
+// 调整堆为大顶堆
+void HeapAdjuest(vector<int>& array, int start, int len)
+{
+    int parent = array[start];
+    int maxChild = 0;
+
+    while (2 * start < len)
+    {
+        maxChild = 2 * start + 1;
+        if (maxChild < len && array[maxChild] < array[maxChild + 1])
+        {
+            ++maxChild;
+        }
+
+        if (parent > array[maxChild])
+        {
+            break;
+        }
+
+        array[start] = array[maxChild];
+        start = maxChild;
+    }
+    if (array[start] != parent)
+    {
+        array[start] = parent;
+    }
+}
+
+// 堆排序
+// 时间复杂度O(Nlog(N))
+// 升序，构建大顶堆
+// 降序，构建小顶堆
+void HeapSort(vector<int>& array)
+{
+    int len = array.size();
+    for (int i = len / 2 - 1; i >= 0; --i)
+    {
+        HeapAdjuest(array, i, len);
+    }
+
+    for (int i = len - 1; i > 0; --i)
+    {
+        std::swap(array[0], array[i]);
+        HeapAdjuest(array, 0, i - 1);
+    }
+
+}
 
 long getTime()
 {
@@ -283,10 +330,14 @@ int main()
 {
     std::cout << "Hello, World!" << std::endl;
 
+//    vector<int> arr = {20 ,70, 60, 12, 40, 30, 8, 10};
+//    HeapSort(arr);
+//    print(arr);
+
 
     vector<int> arr;
 
-    for (int i = 0; i < 20000; ++i)
+    for (int i = 0; i < 200000; ++i)
     {
         arr.push_back(rand() % 10000);
     }
@@ -297,24 +348,26 @@ int main()
     vector<int> arr4(arr);
     vector<int> arr5(arr);
     vector<int> arr6(arr);
+    vector<int> arr7(arr);
 
-    auto time1 = getTime();
-    BubbleSort(arr);                // 2800 ms
-    auto time2 = getTime();
-    cout << time2 - time1 << endl;
+//    auto time1 = getTime();
+//    BubbleSort(arr);                // 2800 ms
+//    auto time2 = getTime();
+//    cout << time2 - time1 << endl;
+//
+//    SelectSort(arr1);               // 650 ms
+//    auto time3 = getTime();
+//    cout << time3 - time2 << endl;
+//
+//    DirectIsertSort(arr2);          // 480 ms
+//    auto time4 = getTime();
+//    cout << time4 - time3 << endl;
+//
+//    BinaryInsertSort(arr3);         // 380 ms
+//    auto time5 = getTime();
+//    cout << time5 - time4 << endl;
 
-    SelectSort(arr1);               // 650 ms
-    auto time3 = getTime();
-    cout << time3 - time2 << endl;
-
-    DirectIsertSort(arr2);          // 480 ms
-    auto time4 = getTime();
-    cout << time4 - time3 << endl;
-
-    BinaryInsertSort(arr3);         // 380 ms
     auto time5 = getTime();
-    cout << time5 - time4 << endl;
-
     ShellInsertIndex(arr4);         // 6 ms
     auto time6 = getTime();
     cout << time6 - time5 << endl;
@@ -327,6 +380,9 @@ int main()
     auto time8 = getTime();
     cout << time8 - time7 << endl;
 
+    HeapSort(arr7);                 // 5ms
+    auto time9 = getTime();
+    cout << time9 - time8 << endl;
 
     return 0;
 }
