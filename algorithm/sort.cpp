@@ -209,18 +209,14 @@ void SelectSort(vector<int>& array)
 // 时间复杂度 O(n^2)
 void BubbleSort(vector<int>& array)
 {
-    for (int k = 0; k < array.size() - 1; ++k)
+	int len = array.size();
+    for (int k = 0; k < len - 1; ++k)
     {
-        int max = array[0];
-        for (int i = 1; i < array.size() - k; ++i)
+        for (int i = 1; i < len - k; ++i)
         {
-            if (array[i] < max)
+            if (array[i] < array[i - 1])
             {
                 std::swap(array[i], array[i - 1]);
-            }
-            else
-            {
-                max = array[i];
             }
         }
     }
