@@ -183,24 +183,19 @@ void DirectIsertSort(vector<int>& array)
 // 时间复杂度 O(n^2)
 void SelectSort(vector<int>& array)
 {
-    int min = -1;
-    int candidateIndex = -1;
-
     for (int k = 0; k < array.size() - 1; ++k)
     {
-        min = array[k];
-        candidateIndex = -1;
+        int idx = k;
         for (int i = k + 1; i < array.size(); ++i)
         {
-            if (array[i] < min)
+            if (array[idx] > array[k])
             {
-                candidateIndex = i;
-                min = array[i];
+                idx = k;
             }
         }
-        if (candidateIndex != -1 && array[k] != min)
+        if (array[idx] != array[k])
         {
-            std::swap(array[k], array[candidateIndex]);
+            std::swap(array[k], array[idx]);
         }
     }
 }
@@ -303,7 +298,7 @@ void HeapSort(vector<int>& array)
     int len = array.size();
     for (int i = len / 2 - 1; i >= 0; --i)
     {
-        HeapAdjuest(array, i, len);
+        HeapAdjuest(array, i, len - 1);
     }
 
     for (int i = len - 1; i > 0; --i)
